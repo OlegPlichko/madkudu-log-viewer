@@ -1,14 +1,14 @@
 ## Features
-Authorization
-Table of logs with pagination
-Bar chart with error count
+- Authorization
+- Table of logs with pagination
+- Bar chart with error count
 
 ## Stack
-PostgreSQL
-Express
-React
-NextUI (tailwindcss)
-Recharts
+- PostgreSQL
+- Express
+- React
+- NextUI (tailwindcss)
+- Recharts
 
 ## Run app
 1. Prerequisites:
