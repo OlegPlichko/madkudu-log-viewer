@@ -21,7 +21,7 @@ const pool = new pg.Pool({
 
 // Log entry validation schema
 const LogEntrySchema = z.object({
-  timestamp: z.string(),
+  timestamp: z.string().regex(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}$/),
   service: z.string(),
   level: z.enum(['INFO', 'WARNING', 'ERROR', 'DEBUG', 'CRITICAL']),
   message: z.string()

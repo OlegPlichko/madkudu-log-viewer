@@ -23,6 +23,10 @@ psql -f ./db/migrations/postgresql-schema.sql
 echo "DATABASE_URL=postgresql://username:password@localhost:5432/log_viewer_db
 PORT=3000" > .env
 
+# Build frontend
+cd app
+npm start build
+
 # Start backend and frontend
 npm start
 

@@ -75,12 +75,15 @@ const LogViewer: React.FC<Props> = ({token}) => {
 
     const res = await response.json();
     if (res.error) {
-      let errorMessage = res.error.name;
+      let errorMessage = res.error.message || res.error.name;
       if (res.invalidEntries) {
-        errorMessage += ` ${res.invalidEntries} invalid entries!`;
+        errorMessage += `; ${res.invalidEntries} invalid entries!`;
       }
-      if (res.error.issues.length > 0) {
-        errorMessage += ` ${res.error.issues[0].message}`;
+      if (res.error.issues && res.error.issues.length > 0) {
+        errorMessage += `; ${res.error.issues[0].message} ${res.error.issues[0].path.toString()}`;
+      }
+      if (!errorMessage) {
+        errorMessage = res.stack;
       }
       setMessage(errorMessage);
     } else {
