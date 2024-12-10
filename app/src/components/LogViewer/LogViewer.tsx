@@ -131,6 +131,7 @@ const LogViewer: React.FC<Props> = ({token}) => {
       >
         <SelectItem key="service">Service</SelectItem>
         <SelectItem key="level">Level</SelectItem>
+        <SelectItem key="message">Message</SelectItem>
       </Select>
       <BarChart width={600} height={300} data={aggregatedData}>
         <XAxis dataKey={aggregationMode} />
