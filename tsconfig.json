@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "NodeNext", //to work with package json with type set to module
+    "moduleResolution": "NodeNext", //to work with package json with type set to module
+    "sourceMap": true, // maps compile javascript back to typescript helps debugging
+    "outDir": "dist",
+  },
+  "include": ["src/**/*", "app.ts"],
+}
