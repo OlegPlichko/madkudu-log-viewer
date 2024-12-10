@@ -174,11 +174,11 @@ app.post('/upload', authMiddleware, upload.single('logfile'), async (req, res) =
 });
 
 app.post('/logs/aggregate', authMiddleware, async (req, res) => {
-  const groupBy = req.query.groupBy as string || 'service';
+  const groupBy = req.body.groupBy as string || 'service';
   const query = `
     SELECT ${groupBy}, 
            COUNT(*) as count, 
-           COUNT(CASE WHEN level = 'ERROR' THEN 1 END) as error_count
+           COUNT(CASE WHEN level IN ('ERROR', 'CRITICAL') THEN 1 END) as error_count
     FROM logs
     GROUP BY ${groupBy}
     ORDER BY count DESC

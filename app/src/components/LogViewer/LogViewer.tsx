@@ -15,12 +15,14 @@ interface Props {
   token: string;
 }
 
+const SERVICE_AGGREGATION_MODE = 'service';
+
 const LogViewer: React.FC<Props> = ({token}) => {
   const [logs, setLogs] = useState([]);
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState('');
   const [totalPages, setTotalPages] = useState();
-  const [aggregationMode, setAggregationMode] = useState('service');
+  const [aggregationMode, setAggregationMode] = useState(SERVICE_AGGREGATION_MODE);
   const [aggregatedData, setAggregatedData] = useState([]);
 
   const fetchLogs = async () => {
@@ -134,7 +136,8 @@ const LogViewer: React.FC<Props> = ({token}) => {
         <XAxis dataKey={aggregationMode} />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="count" fill="#8884d8" />
+        <Bar stackId="amClass" dataKey="count" fill="#8884d8" />
+        {aggregationMode === SERVICE_AGGREGATION_MODE && <Bar stackId="amClass" dataKey="error_count" fill="#d88884"/>}
       </BarChart>
     </div>
   );
