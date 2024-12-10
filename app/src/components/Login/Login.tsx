@@ -20,17 +20,13 @@ const Login: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
-      console.log(response);
 
       const data = await response.json();
-      console.log('data', data);
 
-      console.log('response.ok', response.ok);
       if (response.ok) {
         // Store token in localStorage
         localStorage.setItem('authToken', data.token);
         // Redirect to logs page
-        console.log('LOGIN');
         window.location.href = '/';
       } else {
         setError(data.error);

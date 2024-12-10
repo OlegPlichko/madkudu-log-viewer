@@ -3,10 +3,8 @@ import LogViewer from './components/LogViewer/LogViewer';
 import Login from './components/Login/Login';
 
 function App() {
-  const [token, setToken] = useState<string>();
-  useEffect(() => {
-    setToken(localStorage.getItem('authToken'));
-  }, [localStorage])
+  const token = localStorage.getItem('authToken');
+  
   return (
       (token ? <LogViewer token={token}/> : <Login/>)
   );
