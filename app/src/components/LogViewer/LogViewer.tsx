@@ -18,6 +18,7 @@ interface Props {
 const LogViewer: React.FC<Props> = ({token}) => {
   const [logs, setLogs] = useState([]);
   const [page, setPage] = useState(1);
+  const [message, setMessage] = useState('');
   const [totalPages, setTotalPages] = useState();
   const [aggregationMode, setAggregationMode] = useState('service');
   const [aggregatedData, setAggregatedData] = useState([]);
@@ -63,7 +64,7 @@ const LogViewer: React.FC<Props> = ({token}) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('logfile', file);
-
+    setMessage('uploading..');
     const response = await fetch('/upload', {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -72,8 +73,19 @@ const LogViewer: React.FC<Props> = ({token}) => {
       body: formData
     });
 
-    await response.json();
-    window.location.href = '/';
+    const res = await response.json();
+    if (res.error) {
+      let errorMessage = res.error.name;
+      if (res.invalidEntries) {
+        errorMessage += ` ${res.invalidEntries} invalid entries!`;
+      }
+      if (res.error.issues.length > 0) {
+        errorMessage += ` ${res.error.issues[0].message}`;
+      }
+      setMessage(errorMessage);
+    } else {
+      window.location.href = '/';
+    }
   };
 
   const handlePageChange = (value) => {
@@ -87,6 +99,7 @@ const LogViewer: React.FC<Props> = ({token}) => {
         accept=".csv" 
         onChange={handleFileUpload} 
       />
+      {message}
       <Pagination initialPage={page} total={totalPages} onChange={handlePageChange}/>
       <Table isStriped>
         <TableHeader>
